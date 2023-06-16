@@ -1,4 +1,4 @@
-import numpy as np
+
 import os
 menu = """
 1- Ver ubicaciones disponibles.
@@ -20,59 +20,97 @@ def seleccionar_opcion():
             opcion_valida = True
     return opcion
 
-def lista_comprar(ubicaciones):
-    print("Ubicaciones disponibles:")
-    print("   1 2 3 4 5 6 7 8 9 10")
-    for fila, asientos in ubicaciones.items():
-        print(fila, end=" ")
+asientos_disponibles = {
+    'A': [True] * 10,
+    'B': [True] * 10,
+    'C': [True] * 10,
+    'D': [True] * 10,
+    'E': [True] * 10,
+    'F': [True] * 10,
+    'G': [True] * 10,
+    'H': [True] * 10,
+    'I': [True] * 10,
+    'J': [True] * 10,
+    'K': [True] * 10,
+    'L': [True] * 10,
+    'M': [True] * 10,
+    'N': [True] * 10,
+    'Ñ': [True] * 10,
+    'O': [True] * 10,
+    'P': [True] * 10,
+    'Q': [True] * 10,
+    'R': [True] * 10,
+    'S': [True] * 10,
+    'T': [True] * 10,
+    'U': [True] * 10,
+    'V': [True] * 10,
+    'W': [True] * 10,
+    'X': [True] * 10,
+    'Y': [True] * 10,
+    'Z': [True] * 10
+    }
+
+compras_realizadas = []
+
+def mostrar_ubicaciones():
+    print("Ubicaciones disponibles: ")
+    for fila, asientos in asientos_disponibles.items():
+        fila_caracter = fila + " "
         for asiento in asientos:
-            print(asiento, end=" ")
-        print()
-
-def mostrar_ubicaciones_disponibles(ubicaciones):
-    filas = len(ubicaciones)
-    columnas = len(ubicaciones["A"])
-
-    matriz = np.empty((filas, columnas), dtype=str)
-
-    for i, (fila, columnas) in enumerate(ubicaciones.items()):
-        for j, valor in columnas.items():
-            if valor == "O":
-                matriz[i, int(j) - 1] = "O"
+            if asiento:
+                fila_caracter += 'O '
             else:
-                matriz[i, int(j) - 1] = "X"
+                fila_caracter += 'X '
+        print(fila_caracter)
+    print("")
 
-    print(matriz)
+def comprar_ticket():
+    fila_raw = input("Ingrese la fila del asiento (A-Z): ")
+    fila = fila_raw.upper()
+    columna = int(input("Ingrese la columa del asiento por favor (1-10): "))
 
-ubicaciones = {
-    "A":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "B":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "C":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "D":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "F":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "G":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "H":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "I":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "J":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "K":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "L":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "M":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "N":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "Ñ":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "O":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "P":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "Q":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "R":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "S":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "T":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "U":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "U":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "W":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "X":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "Y":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"},
-    "Z":{"1":"O", "2": "O", "3": "O", "4": "O", "5": "O", "6": "O", "7": "O", "8": "O", "9": "O", "10": "O"}
-}
+    if fila not in asientos_disponibles.keys():
+        print("La fila ingresada no esta disponible, vuelva a intentarlo.")
 
+    if columna  < 1 or columna > 10:
+        print ("La columna ingresada no es valida, vuelva a intentarlo por favor.")
+        return 
+    
+    if not asientos_disponibles[fila][columna - 1]:
+        print("El asiento seleccionado no esta disponible.")
+        return
+    
+    if fila in ["A", "B", "C"]:
+        precio = 50
+    elif fila in ["D", "E", "F"]:
+        precio = 40
+    elif fila in ["G", "H", "I"]:
+        precio = 30
+    else:
+        precio = 20
+
+    nombre_cliente = input("Ingrese el nombre del cliente por favor: ")
+    asientos_disponibles[fila][columna] = False               
+    compra = {
+        'Nombre': nombre_cliente,
+        'Ubicacion': fila + str(columna),
+        'Precio': precio
+    } 
+    compras_realizadas.append(compra)
+
+    print("¡Compra Realizada exitosamente!")
+
+def ver_compras():
+    for compra in compras_realizadas:
+        print ("Nombre", compra['Nombre'])
+        print ("ubicacion", compra['Ubicacion'])
+        print ("Total pagado", compra['Precio']) 
+        print ("----------------------------------")
+    total_ventas = sum(compra['Precio'] for compra in compras_realizadas) 
+    print (f"Total de ventas: {total_ventas}")
+    print("")    
+        
+             
 
 while True:
     limpiar_pantalla()
@@ -80,17 +118,19 @@ while True:
     if opcion_selecciona == "1":
         limpiar_pantalla()
         print ("Ver ubicaciones disponibles:")
-        mostrar_ubicaciones_disponibles(ubicaciones)
+        mostrar_ubicaciones()
         input("Presione Enter para volver al menú principal...")
         
     elif opcion_selecciona == "2":
         limpiar_pantalla()
         print ("Comprar tickets.") 
+        comprar_ticket()
         input("Presione Enter para volver al menú principal...")
         
     elif opcion_selecciona == "3":
        limpiar_pantalla()
        print ("Ver compras realizadas.")
+       ver_compras()
        input("Presione Enter para volver al menú principal...")
     elif opcion_selecciona == "4":
             break

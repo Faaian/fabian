@@ -1,0 +1,109 @@
+# Diccionario para almacenar el estado de ocupación de los asientos
+asientos_disponibles = {
+    'A': [True] * 10,
+    'B': [True] * 10,
+    'C': [True] * 10,
+    'D': [True] * 10,
+    'E': [True] * 10,
+    'F': [True] * 10,
+    'G': [True] * 10,
+    'H': [True] * 10,
+    'I': [True] * 10,
+    'J': [True] * 10
+}
+
+# Lista para almacenar las compras realizadas
+compras_realizadas = []
+
+# Función para mostrar las ubicaciones disponibles
+def mostrar_ubicaciones():
+    print("\nUbicaciones disponibles:")
+    for fila, asientos in asientos_disponibles.items():
+        fila_str = fila + ' '
+        for asiento in asientos:
+            if asiento:
+                fila_str += 'O '
+            else:
+                fila_str += 'X '
+        print(fila_str)
+    print("")
+
+# Función para comprar un ticket
+def comprar_ticket():
+    fila_raw = input("Ingrese la fila del asiento (A-Z): ")
+    fila = fila_raw.upper()
+    columna = int(input("Ingrese la columna del asiento (1-10): "))
+
+    # Verificar si la fila es válida
+    if fila not in asientos_disponibles.keys():
+        print("La fila ingresada no es válida.")
+        return
+
+    # Verificar si la columna es válida
+    if columna < 1 or columna > 10:
+        print("La columna ingresada no es válida.")
+        return
+
+    # Verificar si el asiento está disponible
+    if not asientos_disponibles[fila][columna - 1]:
+        print("El asiento seleccionado ya está ocupado.")
+        return
+
+    # Calcular el precio del ticket según la ubicación del asiento
+    if fila in ['A', 'B', 'C']:
+        precio = 50
+    elif fila in ['D', 'E', 'F']:
+        precio = 40
+    elif fila in ['G', 'H', 'I']:
+        precio = 30
+    else:
+        precio = 20
+
+    # Solicitar el nombre del cliente
+    nombre_cliente = input("Ingrese el nombre del cliente: ")
+
+    # Marcar el asiento como ocupado
+    asientos_disponibles[fila][columna - 1] = False
+
+    # Registrar la compra realizada
+    compra = {
+        'nombre': nombre_cliente,
+        'ubicacion': fila + str(columna),
+        'precio': precio
+    }
+    compras_realizadas.append(compra)
+
+    print("¡Compra realizada exitosamente!\n")
+
+# Función para ver las compras realizadas
+def ver_compras_realizadas():
+    print("\nCompras realizadas:")
+    for compra in compras_realizadas:
+        print("Nombre: ", compra['nombre'])
+        print("Ubicación: ", compra['ubicacion'])
+        print("Precio: $", compra['precio'])
+        print("---")
+    total_ventas = sum(compra['precio'] for compra in compras_realizadas)
+    print("Total de ventas: $", total_ventas)
+    print("")
+
+# Menú principal
+while True:
+    print("Bienvenido al Teatro La Estrella")
+    print("1. Ver ubicaciones disponibles")
+    print("2. Comprar ticket")
+    print("3. Ver compras realizadas")
+    print("4. Salir")
+
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == '1':
+        mostrar_ubicaciones()
+    elif opcion == '2':
+        comprar_ticket()
+    elif opcion == '3':
+        ver_compras_realizadas()
+    elif opcion == '4':
+        break
+    else:
+        print("Opción inválida. Por favor, seleccione una opción válida.\n")
