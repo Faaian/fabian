@@ -16,6 +16,7 @@ def seleccionar_opcion():
         print (menu)
         opcion = input("Elija una opción: ")
         if opcion != "1" and opcion != "2" and opcion != "3" and opcion != "4":
+            limpiar_pantalla()
             print ("Opción invalida, vuelva a seleccionar")
         else:
             opcion_valida = True
@@ -90,7 +91,8 @@ def comprar_ticket():
     else:
         precio = 20
 
-    nombre_cliente = input("Ingrese el nombre del cliente por favor: ")
+    nombre_cliente_raw = input("Ingrese el nombre del cliente por favor: ")
+    nombre_cliente = nombre_cliente_raw.capitalize()
     asientos_disponibles[fila][columna] = False               
     compra = {
         'Nombre': nombre_cliente,
@@ -103,9 +105,9 @@ def comprar_ticket():
 
 def ver_compras():
     for compra in compras_realizadas:
-        print ("Nombre", compra['Nombre'])
-        print ("ubicacion", compra['Ubicacion'])
-        print ("Total pagado", compra['Precio']) 
+        print ("Nombre:", compra['Nombre'])
+        print ("ubicacion:", compra['Ubicacion'])
+        print ("Total pagado:", compra['Precio']) 
         print ("----------------------------------")
     total_ventas = sum(compra['Precio'] for compra in compras_realizadas) 
     print (f"Total de ventas: {total_ventas}")
