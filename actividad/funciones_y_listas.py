@@ -12,6 +12,7 @@ def limpiar_pantalla():
 def seleccionar_opcion():
     opcion_valida = False
     while not opcion_valida:
+        print("\nBienvenido al Teatro Estrella.")
         print (menu)
         opcion = input("Elija una opción: ")
         if opcion != "1" and opcion != "2" and opcion != "3" and opcion != "4":
@@ -123,7 +124,7 @@ while True:
         
     elif opcion_selecciona == "2":
         limpiar_pantalla()
-        print ("Comprar tickets.") 
+        print ("Comprar tickets.")
         comprar_ticket()
         input("Presione Enter para volver al menú principal...")
         
